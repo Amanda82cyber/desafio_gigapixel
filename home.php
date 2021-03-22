@@ -1,4 +1,4 @@
-<?php include("menu.php"); ?>
+<?php include("verifica_login.php"); include("menu.php"); ?>
 
         <script>
             $(document).ready(function(){

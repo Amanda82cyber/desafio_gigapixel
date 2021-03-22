@@ -1,3 +1,5 @@
+<?php include("verifica_login.php"); ?>
+
 <!DOCTYPE html>
 
 <html lang = "pt_BR">
@@ -15,6 +17,26 @@
 
         <script defer src = "help_files/fontawesome/solid.js"></script>
         <script defer src = "help_files/fontawesome/fontawesome.js"></script>
+
+        <script>
+            function excluir_conta(){
+                var confirmacao = confirm("Deseja realmente excluir sua conta?");
+
+                if(confirmacao == true){
+                    $.ajax({
+                        url: "excluir.php",
+                        type: "post",
+                        data: {identificador: "email", tabela: "usuarios"}
+                        success: function(data){
+                            alert(data);
+                            window.location.href = "index.php";
+                        }
+                    });
+                }else{
+                    alert("Ótima escolha!");
+                }
+            }
+        </script>
     </head>
 
     <body>
@@ -40,15 +62,9 @@
                         <a class = "nav-link" href = "despesas.php"><i class = "fa fa-shopping-cart" aria-hidden = "true"></i> Despesas</a>
                     </li>
 
-                    <li class = "nav-item">
-                        <a class = "nav-link" href = "saldos.php"><i class = "fa fa-balance-scale" aria-hidden = "true"></i> Saldos</a>
-                    </li>
-
                     <li class = "nav-item dropdown">
                         <a class = "nav-link dropdown-toggle" href = "#" id = "menu_dropdown" role = "button" data-toggle = "dropdown" aria-haspopup = "true" aria-expanded = "false">
                             <?php
-                                session_start();
-
                                 $nome = explode(" ", $_SESSION["nome"][0]);
 
                                 echo "<i class = 'fa fa-user-circle' aria-hidden = 'true'></i> $nome[0]";
@@ -56,15 +72,15 @@
                         </a>
 
                         <div class = "dropdown-menu" aria-labelledby = "menu_dropdown">
-                            <a class = "dropdown-item" href = "#">
+                            <a class = "dropdown-item" href = "editar_perfil.php">
                                 <i class = "fa fa-wrench" aria-hidden = "true"></i> Editar Perfil
                             </a>
 
-                            <a class = "dropdown-item" href = "#">
+                            <a class = "dropdown-item" onclick = "excluir_conta()">
                                 <i class = "fa fa-trash" aria-hidden = "true"></i> Excluir Conta
                             </a>
 
-                            <a class = "dropdown-item" href = "#">
+                            <a class = "dropdown-item" href = "logout.php">
                                 <i class = "fa fa-share" aria-hidden = "true"></i> Sair
                             </a>
                         </div>

@@ -1,3 +1,18 @@
+<?php
+    session_start();
+
+    if(isset($_SESSION["email"])){
+        echo '<link rel = "stylesheet" href = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity = "sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin = "anonymous" />
+              <div class = "container-fluid">
+                <div class = "alert alert-danger mt-3" role = "alert">
+                    <h4 class = "alert-heading">Você já está logado! <img src = "alerta.png" /></h4>
+                    <p><a href = "home.php" class = "text-danger">CLIQUE AQUI</a> para continuar utilizando a aplicação!</p>
+                </div>
+              </div>';
+        die();
+    }
+?>
+
 <!DOCTYPE html>
 
 <html lang = "pt_BR">
@@ -73,8 +88,7 @@
                                     data: {nome: $("#nome").val(), profissao: $("#profissao").val(), email: $("#email_cadastro").val(), senha: $("#senha_cadastro").val(), frase_senha: $("#frase_senha").val(), data_nascimento: $("#data_nascimento").val()},
                                     success: function(data){
                                         if(data == 1){
-                                            alert("Usuário cadastrado! Faça seu login!");
-                                            window.location.href = "index.php";
+                                            $("#msg_cadastro").html("Usuário cadastrado com sucesso! Faça seu login!").css("color", "green");
                                         }else{
                                             $("#msg_cadastro").html(data).css("color", "red");
                                         }
@@ -165,46 +179,7 @@
                     </div>
 
                     <div class = "modal-body">
-                        <form class = "needs-validation" novalidate>
-                            <div class = "form-group">
-                                <label for = "nome" class = "col-form-label">Nome</label>
-                                <input type = "text" class = "form-control" id = "nome" required />
-                            </div>
-
-                            <div class = "form-group">
-                                <label for = "data_nascimento" class = "col-form-label">Data de Nascimento</label>
-                                <input type = "date" class = "form-control" id = "data_nascimento" required />
-                            </div>
-
-                            <div class = "form-group">
-                                <label for = "profissao" class = "col-form-label">Profissão</label>
-                                <input type = "text" class = "form-control" id = "profissao" required />
-                            </div>
-
-                            <div class = "form-group">
-                                <label for = "email_cadastro" class = "col-form-label">E-mail</label>
-                                <input type = "email" class = "form-control" id = "email_cadastro" required />
-                            </div>
-
-                            <div class = "form-group">
-                                <label for = "senha_cadastro" class = "col-form-label">Senha</label>
-                                <input type = "password" class = "form-control" id = "senha_cadastro" required />
-                            </div>
-
-                            <div class = "form-group">
-                                <label for = "confirmar_senha" class = "col-form-label">Confirmar Senha</label>
-                                <input type = "password" class = "form-control" id = "confirmar_senha" required />
-                            </div>
-
-                            <div class = "form-group">
-                                <label for = "frase_senha" class = "col-form-label">Uma frase que te faça lembrar da senha</label>
-                                <input type = "text" class = "form-control" id = "frase_senha" required />
-                            </div>
-
-                            <div class = "form-group" id = "msg_cadastro"></div>
-
-                            <input id = "cadastrar" class = "btn btn-primary btn-block btn-md" type = "submit" value = "Cadastrar" />
-                        </form>
+                        <?php include("form_usuarios.inc"); ?>
                     </div>
                 </div>
             </div>
